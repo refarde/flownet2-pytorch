@@ -1,0 +1,10 @@
+Project: FlowNet 2.0
+Version: Cloned from repo below on 2019/11/04.
+Website: https://github.com/NVIDIA/flownet2-pytorch
+License: Apache License, Version 2.0
+Description: Pytorch implementation of FlowNet 2.0: Evolution of Optical Flow
+             Estimation with Deep Networks.
+Changes: Minimal changes to enable building with buck.
+
+# IMPORTANT: For internal use only. You must e-mail legal at opensource@fb.com,
+#            if you plan on using this externally.

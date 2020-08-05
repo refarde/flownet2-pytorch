@@ -5,7 +5,7 @@
 
 int resample2d_cuda_forward(
     at::Tensor& input1,
-    at::Tensor& input2, 
+    at::Tensor& input2,
     at::Tensor& output,
     int kernel_size, bool bilinear) {
       resample2d_kernel_forward(input1, input2, output, kernel_size, bilinear);
@@ -13,11 +13,11 @@ int resample2d_cuda_forward(
 }
 
 int resample2d_cuda_backward(
-    at::Tensor& input1, 
+    at::Tensor& input1,
     at::Tensor& input2,
     at::Tensor& gradOutput,
-    at::Tensor& gradInput1, 
-    at::Tensor& gradInput2, 
+    at::Tensor& gradInput1,
+    at::Tensor& gradInput2,
     int kernel_size, bool bilinear) {
         resample2d_kernel_backward(input1, input2, gradOutput, gradInput1, gradInput2, kernel_size, bilinear);
     return 1;
@@ -25,8 +25,7 @@ int resample2d_cuda_backward(
 
 
 
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+PYBIND11_MODULE(resample2d_cuda, m) {
   m.def("forward", &resample2d_cuda_forward, "Resample2D forward (CUDA)");
   m.def("backward", &resample2d_cuda_backward, "Resample2D backward (CUDA)");
 }
-

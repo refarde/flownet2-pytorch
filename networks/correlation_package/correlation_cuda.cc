@@ -43,7 +43,7 @@ int correlation_forward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor&
 
   int success = correlation_forward_cuda_kernel(
     output,
-    output.size(0), 
+    output.size(0),
     output.size(1),
     output.size(2),
     output.size(3),
@@ -67,7 +67,7 @@ int correlation_forward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor&
     input2.stride(3),
     rInput1,
     rInput2,
-    pad_size,     
+    pad_size,
     kernel_size,
     max_displacement,
     stride1,
@@ -86,7 +86,7 @@ int correlation_forward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor&
 
 }
 
-int correlation_backward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor& rInput1, at::Tensor& rInput2, at::Tensor& gradOutput, 
+int correlation_backward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor& rInput1, at::Tensor& rInput2, at::Tensor& gradOutput,
                        at::Tensor& gradInput1, at::Tensor& gradInput2,
                        int pad_size,
                        int kernel_size,
@@ -131,7 +131,7 @@ int correlation_backward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor
                                                 input1.stride(1),
                                                 input1.stride(2),
                                                 input1.stride(3),
-                                                input2,  
+                                                input2,
                                                 input2.stride(0),
                                                 input2.stride(1),
                                                 input2.stride(2),
@@ -152,7 +152,7 @@ int correlation_backward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor
                                                 pad_size,
                                                 kernel_size,
                                                 max_displacement,
-                                                stride1, 
+                                                stride1,
                                                 stride2,
                                                 corr_type_multiply,
 												at::cuda::getCurrentCUDAStream()
@@ -166,8 +166,7 @@ int correlation_backward_cuda(at::Tensor& input1, at::Tensor& input2, at::Tensor
   return 1;
 }
 
-PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+PYBIND11_MODULE(correlation_cuda, m) {
   m.def("forward", &correlation_forward_cuda, "Correlation forward (CUDA)");
   m.def("backward", &correlation_backward_cuda, "Correlation backward (CUDA)");
 }
-

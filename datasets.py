@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import torch
 import torch.utils.data as data
 
@@ -6,9 +8,8 @@ from os.path import *
 import numpy as np
 
 from glob import glob
-import utils.frame_utils as frame_utils
+from .utils import frame_utils
 
-from scipy.misc import imread, imresize
 
 class StaticRandomCrop(object):
     def __init__(self, image_size, crop_size):
@@ -355,7 +356,7 @@ class ImagesFromFolder(data.Dataset):
     else:
         cropper = StaticCenterCrop(image_size, self.render_size)
     images = list(map(cropper, images))
-    
+
     images = np.array(images).transpose(3,0,1,2)
     images = torch.from_numpy(images.astype(np.float32))
 
@@ -368,7 +369,7 @@ class ImagesFromFolder(data.Dataset):
 import argparse
 import sys, os
 import importlib
-from scipy.misc import imsave
+from imageio import imsave
 import numpy as np
 
 import datasets

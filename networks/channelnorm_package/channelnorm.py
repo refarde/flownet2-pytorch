@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from torch.autograd import Function, Variable
 from torch.nn.modules.module import Module
 import channelnorm_cuda
@@ -36,4 +38,3 @@ class ChannelNorm(Module):
 
     def forward(self, input1):
         return ChannelNormFunction.apply(input1, self.norm_deg)
-

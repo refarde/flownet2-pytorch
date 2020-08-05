@@ -1,9 +1,17 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import torch
 from torch.nn.modules.module import Module
 from torch.autograd import Function
 import correlation_cuda
 
-class CorrelationFunction(Function):
+### Note(jkopf): I commented out the lines with triple comments (###) to fix the
+### following error: 'Legacy autograd function with non-static forward method
+### is deprecated. Please use new-style autograd function with static forward
+### method.'
+
+### class CorrelationFunction(Function):
+class CorrelationFunction(Module):
 
     def __init__(self, pad_size=3, kernel_size=3, max_displacement=20, stride1=1, stride2=2, corr_multiply=1):
         super(CorrelationFunction, self).__init__()
@@ -16,14 +24,14 @@ class CorrelationFunction(Function):
         # self.out_channel = ((max_displacement/stride2)*2 + 1) * ((max_displacement/stride2)*2 + 1)
 
     def forward(self, input1, input2):
-        self.save_for_backward(input1, input2)
+        ### self.save_for_backward(input1, input2)
 
         with torch.cuda.device_of(input1):
             rbot1 = input1.new()
             rbot2 = input2.new()
             output = input1.new()
 
-            correlation_cuda.forward(input1, input2, rbot1, rbot2, output, 
+            correlation_cuda.forward(input1, input2, rbot1, rbot2, output,
                 self.pad_size, self.kernel_size, self.max_displacement,self.stride1, self.stride2, self.corr_multiply)
 
         return output
@@ -59,4 +67,3 @@ class Correlation(Module):
         result = CorrelationFunction(self.pad_size, self.kernel_size, self.max_displacement,self.stride1, self.stride2, self.corr_multiply)(input1, input2)
 
         return result
-
